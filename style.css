@@ -12,6 +12,10 @@ body {
     line-height: 1.75em;
 }
 
+header a {
+    color: #000;
+}
+
 .intro {
     max-width: 60%;
     margin: 0 auto;
@@ -71,7 +75,7 @@ button:hover {
     display: inline-block;
     background: hsl(60, 2%, 11%);
     color: #fff;
-    width: 400px;
-    padding: 1em;
+    width: 300px;
+    padding: .5em;
     margin: 0 auto;
 }
