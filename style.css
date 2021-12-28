@@ -1,0 +1,77 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 2.5em;
+    background: hsl(31, 57%, 95%);
+    line-height: 1.75em;
+}
+
+.intro {
+    max-width: 60%;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 3em;
+    padding: 0.5em;
+    font-weight: 700;
+}
+
+.form {
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*justify-content: center;*/
+    /*width: 30%;*/
+
+}
+
+.form-item {
+    display: inline;
+    padding: 0.5em;
+}
+
+button {
+    background: #fff;
+    border: 1px solid #333;
+    border-radius: 0.2em;
+    margin: 0.5em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.button {
+    padding: 0.5em 2em;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+#countdown {
+    margin: 1em;
+    font-size: 2em;
+    line-height: 1.5em;
+}
+
+.stop {
+    display: block;
+    margin: 0 auto;
+}
+
+.break-timer {
+    display: inline-block;
+    background: hsl(60, 2%, 11%);
+    color: #fff;
+    width: 400px;
+    padding: 1em;
+    margin: 0 auto;
+}

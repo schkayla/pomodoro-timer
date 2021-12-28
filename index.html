@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pomodoro of sorts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="intro">
+        <h1>Pomodoro Of Sorts</h1>
+        <p>Create your own pomodoro timer. <!-- Select a spotify playlist and --> Edit how long you want your work session and break to be. Happy working!</p>    
+    </div>
+
+    <form class="form">
+        <!-- <div class="form-item">
+            <label>Playlist</label>
+            <input name="playlist" placeholder="Playlist name">
+        </div> -->
+        <div class="form-item">
+            <label>Work time</label>
+            <input type="number" name="work-time" id="work-time" placeholder="mins">
+        </div>
+        <div class="form-item">
+            <label>Break time</label>
+            <input type="number" name="break-time" id="break-time" placeholder="mins">
+        </div>
+    
+        <button type="button" class="form-item button">Go</button>
+    </form>
+
+    <div id="countdown">
+   
+    </div>
+
+
+    <script src="index.js"></script>
+</body>
+</html>
