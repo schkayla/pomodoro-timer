@@ -1,3 +1,20 @@
+let darkMode = false;
+
+document.querySelector('.toggle-bar').addEventListener('click', () => {
+    if (!darkMode) {
+        document.querySelector('.ball').style.transform = 'translateX(1.2em)';
+        document.body.classList.toggle('dark-mode');   
+        document.querySelector('.mode-text').innerHTML = "dark mode";
+        darkMode = true;
+    } else {
+        document.querySelector('.ball').style.transform = 'translateX(0)';
+        document.body.classList.toggle('dark-mode');
+        document.querySelector('.mode-text').innerHTML = "light mode";
+        darkMode = false;
+    } 
+})
+
+
 
 const button = document.querySelector('.button');
 let countdownElement = document.getElementById('countdown');
@@ -75,10 +92,8 @@ button.addEventListener("click", () => {
 
 //add beep when switches
 
-// check that workTime and breakTime are numbers
+// check that workTime and breakTime are numbers, alert if not
 
 //add spotify playlist
 
-// repeat timers
-
-//add stop button and pause
+//add pause and resume buttons

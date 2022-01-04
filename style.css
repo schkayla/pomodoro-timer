@@ -10,10 +10,71 @@ body {
     margin-top: 2.5em;
     background: hsl(31, 57%, 95%);
     line-height: 1.75em;
+    color:hsl(60, 2%, 11%);
+}
+
+/******** DARK MODE ********/
+
+.dark-mode {
+    background: hsl(60, 2%, 11%);
+    color: hsl(31, 57%, 95%);
+}
+
+.dark-mode .break-timer {
+    background: hsl(31, 57%, 95%);
+    color: hsl(60, 2%, 11%);
+}
+
+.dark-mode a {
+    color:hsl(31, 57%, 95%);
+}
+
+.dark-mode .toggle-bar {
+    background-color: hsl(31, 57%, 95%);
+}
+
+.dark-mode .ball {
+    background-color: hsl(60, 2%, 11%);
+}
+
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    
 }
 
 header a {
-    color: #000;
+    color:hsl(60, 2%, 11%);
+    padding: 0 4em;
+}
+
+.toggle {
+    margin-right: 10%;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-bar {
+    display: inline-block;
+    background-color: hsl(60, 2%, 11%);
+    border-radius: 50px;
+    width: 2.5em;
+    height: 1.2em;
+    cursor: pointer;
+    margin: 0 .5em;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.ball {
+    background-color: hsl(31, 57%, 95%);
+    width: .9em;
+    height: .9em;
+    left: .2em;
+    border-radius: 100%;
+    position: absolute;
 }
 
 .intro {
@@ -74,8 +135,7 @@ button:hover {
 .break-timer {
     display: inline-block;
     background: hsl(60, 2%, 11%);
-    color: #fff;
+    color: hsl(31, 57%, 95%);
     width: 300px;
-    padding: .5em;
     margin: 0 auto;
 }
