@@ -1,3 +1,4 @@
+// Light and dark mode toggle
 let darkMode = false;
 
 document.querySelector('.toggle-bar').addEventListener('click', () => {
@@ -15,7 +16,6 @@ document.querySelector('.toggle-bar').addEventListener('click', () => {
 })
 
 
-
 const button = document.querySelector('.button');
 let countdownElement = document.getElementById('countdown');
 
@@ -30,9 +30,14 @@ let breakCountdown;
 
 let stopButton;
 let stopButtonActive = false;
+let pauseButton;
+let pauseButtonActive = false;
 
+let minutes;
+let secs;
 
-button.addEventListener("click", () => {
+// Go button to start timer
+button.addEventListener('click', () => {
     clearInterval(interval);
     clearInterval(breakInterval);
 
@@ -44,7 +49,7 @@ button.addEventListener("click", () => {
 
     countdownElement.innerHTML = `${workTime}:00 <br> Work`;
 
-
+    // Check for inputs that are positive numbers
     if (!workTime || !breakTime || workTime < 0 || breakTime < 0) {
         alert("please enter a number greater than 0 for Work time and Break time");
         countdownElement.innerHTML = ``;
@@ -55,18 +60,44 @@ button.addEventListener("click", () => {
 
     updateWorkTimer();   
 
+    // Only add stop button if there isn't one currently
     if (!stopButtonActive) {
         addStopButton();
+        addPauseButton();
         stopButtonActive = true;
-        
     }
 
+    // Timer to 00:00 when stop button clicked
     stopButton.addEventListener('click', () => {
         clearInterval(interval);
         clearInterval(breakInterval);
         countdownElement.innerHTML = `00:00`;
         document.body.removeChild(stopButton);
+        document.body.removeChild(pauseButton);
         stopButtonActive = false;
+    })
+
+    // Pause timer and resume when clicked again
+    pauseButton.addEventListener('click', () => {
+        pauseButtonActive = !pauseButtonActive;
+        // let currentTime;
+        if (countdownElement.innerHTML.includes('Work') && pauseButtonActive) {
+            currentTime = workCountdown;
+            countdownElement.innerHTML = `${minutes}:${secs}<br> Work`;
+            pauseButton.textContent = "Resume";
+            clearInterval(interval);
+        } else if (countdownElement.innerHTML.includes('Break') && pauseButtonActive) {
+            currentTime = breakCountdown;
+            countdownElement.innerHTML = `${minutes}:${secs}<br> Break`;
+            pauseButton.textContent = "Resume";
+            clearInterval(breakInterval);
+        } else if (countdownElement.innerHTML.includes('Work') && !pauseButtonActive) {
+            pauseButton.textContent = "Pause";
+            updateWorkTimer(currentTime);
+        } else {
+            pauseButton.textContent = "Pause";
+            updateBreakTimer(currentTime);
+        }
     })
 
 });
@@ -75,10 +106,10 @@ button.addEventListener("click", () => {
 function updateWorkTimer() {
         
     interval = setInterval(() => {
-        let minutes = Math.floor(workCountdown / 60);
+        minutes = Math.floor(workCountdown / 60);
         let seconds = workCountdown % 60;
 
-        let secs = `${seconds}`.padStart(2, '0');
+        secs = `${seconds}`.padStart(2, '0');
 
         countdownElement.innerHTML = `${minutes}:${secs}<br> Work`;
         countdownElement.classList.remove("break-timer");
@@ -116,7 +147,7 @@ function updateBreakTimer() {
     }, 1000)
 }
 
-
+// Stop and pause buttons
 function addStopButton() {
     stopButton = document.createElement("button");
     stopButton.textContent = "Stop";
@@ -126,6 +157,13 @@ function addStopButton() {
     stopButtonActive = true;
 }
 
+function addPauseButton() {
+    pauseButton = document.createElement("button");
+    pauseButton.textContent = "Pause";
+    pauseButton.type = "button";
+    pauseButton.className = "form-item button stop";
+    document.body.appendChild(pauseButton);
+}
 
 //button popup for overall counter time counting up
 
