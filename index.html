@@ -27,10 +27,15 @@
     </div>
 
     <form class="form">
-        <!-- <div class="form-item">
-            <label>Playlist</label>
-            <input name="playlist" placeholder="Playlist name">
-        </div> -->
+        <div class="form-item">
+            <label>Choose a playlist</label>
+            <select name="playlist" id="playlist-select">
+                <option value="jazz">In the mood for Jazz</option>
+                <option value="lofi">Need some chill Lofi</option>
+                <option value="indie">Peppy Indie please!</option>
+            </select>
+            
+        </div>
         <div class="form-item">
             <label>Work time</label>
             <input type="number" name="work-time" id="work-time" placeholder="mins">
@@ -43,6 +48,7 @@
         <button type="button" class="form-item button">Go</button>
     </form>
 
+    <div id="playMusic"></div>
     <div id="countdown">
    
     </div>
