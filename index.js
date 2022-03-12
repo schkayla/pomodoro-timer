@@ -21,149 +21,77 @@ const button = document.querySelector('.button');
 let countdownElement = document.getElementById('countdown');
 const choosePlaylist = document.getElementById('playlist-select');
 const playMusic = document.getElementById('playMusic');
-let videoUrl;
+let videoUrl, control, interval, workCountdown, breakCountdown, countdown;
+let workOrBreak = true;
 
-let interval;
-let breakInterval;
-
-let workTime;
-let breakTime;
-
-let workCountdown;
-let breakCountdown;
-
-let stopButton;
+let stopButton, pauseButton;
 let stopButtonActive = false;
-let pauseButton;
 let pauseButtonActive = false;
 
-let minutes;
-let secs;
+let minutes, secs, currentTime;
 
-// Go button to start timer and play music
-button.addEventListener('click', () => {
-    clearInterval(interval);
-    clearInterval(breakInterval);
-
-     // Check for inputs that are positive numbers
-    //  if (!workTime || !breakTime || workTime < 0 || breakTime < 0) {
-    //     alert("please enter a number greater than 0 for Work and Break time");
-    //     countdownElement.innerHTML = ``;
-    //     if (stopButton) document.body.removeChild(stopButton);
-    //     stopButtonActive = false;
-    //     return;
-    // }
-
-    if (choosePlaylist.value === "lofi") {
-        videoUrl = "https://www.youtube.com/embed/5qap5aO4i9A?controls=0&autoplay=1";
-    } else if (choosePlaylist.value === "indie"){
-        videoUrl = "https://www.youtube.com/embed/1itSqkbXIlU?controls=0&autoplay=1";
-    } else {
-        videoUrl = "https://www.youtube.com/embed/hcG9iPi6hF0?controls=0&autoplay=1";
-    }
-
-    workTime = parseInt(document.getElementById('work-time').value);
-    breakTime = document.getElementById('break-time').value;
-
-    workCountdown = workTime * 60;
-    breakCountdown = breakTime * 60;
-
-    countdownElement.innerHTML = `${workTime}:00 <br> Work`;
-
-    updateWorkTimer();   
-
-    // Only add stop button if there isn't one currently
-    if (!stopButtonActive) {
-        addStopButton();
-        addPauseButton();
-        stopButtonActive = true;
-    }
-
-    // Timer to 00:00 when stop button clicked
-    stopButton.addEventListener('click', () => {
-        clearInterval(interval);
-        clearInterval(breakInterval);
-        countdownElement.innerHTML = `00:00`;
-        document.body.removeChild(stopButton);
-        document.body.removeChild(pauseButton);
-        stopButtonActive = false;
-        playMusic.innerHTML = '';
-    })
-
-    // Pause timer and resume when clicked again
-    pauseButton.addEventListener('click', () => {
-        pauseButtonActive = !pauseButtonActive;
-        // let currentTime;
-        if (countdownElement.innerHTML.includes('Work') && pauseButtonActive) {
-            currentTime = workCountdown;
-            countdownElement.innerHTML = `${minutes}:${secs}<br> Work`;
-            pauseButton.textContent = "Resume";
-            clearInterval(interval);
-            playMusic.innerHTML = '';
-        } else if (countdownElement.innerHTML.includes('Break') && pauseButtonActive) {
-            currentTime = breakCountdown;
-            countdownElement.innerHTML = `${minutes}:${secs}<br> Break`;
-            pauseButton.textContent = "Resume";
-            clearInterval(breakInterval);
-            playMusic.innerHTML = '';
-        } else if (countdownElement.innerHTML.includes('Work') && !pauseButtonActive) {
-            pauseButton.textContent = "Pause";
-            updateWorkTimer(currentTime);
-            playMusic.innerHTML = `<iframe width="560" height="315" src=${videoUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+function updateTimer() {    
+    if (workOrBreak) {
+        if (currentTime) {
+            countdown = currentTime;
         } else {
-            pauseButton.textContent = "Pause";
-            updateBreakTimer(currentTime);
-            playMusic.innerHTML = `<iframe width="560" height="315" src=${videoUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            countdown = workCountdown;
         }
-    })
+        control = 'Work';
+        countdownElement.classList.remove("break-timer");
+        playMusic.innerHTML = `<iframe width="560" height="315" src=${videoUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    }  else {
+        if (currentTime ? countdown = currentTime : countdown = breakCountdown);
+        control = 'Break';
+        countdownElement.classList.add("break-timer");
+        playMusic.innerHTML = '';
+    }
 
-});
-
-
-function updateWorkTimer() {
-    playMusic.innerHTML = `<iframe width="560" height="315" src=${videoUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-        
     interval = setInterval(() => {
-        minutes = Math.floor(workCountdown / 60);
-        let seconds = workCountdown % 60;
+
+        minutes = Math.floor(countdown / 60);
+        let seconds = countdown % 60;
 
         secs = `${seconds}`.padStart(2, '0');
 
-        countdownElement.innerHTML = `${minutes}:${secs}<br> Work`;
-        countdownElement.classList.remove("break-timer");
+        countdownElement.innerHTML = `${minutes}:${secs}<br>${control}`;
 
-        if (workCountdown === 0) {
+        if (countdown <= 0) {
             clearInterval(interval);
-            breakCountdown = breakTime * 60
-            updateBreakTimer();
+            workOrBreak = !workOrBreak;
+            updateTimer();
         }
 
-        workCountdown--;
+        countdown--;
     }, 1000);
 }
 
-
-function updateBreakTimer() {
+ // Timer to 00:00 when stop button clicked
+ function reset() {
+    clearInterval(interval);
+    countdownElement.innerHTML = `00:00`;
+    document.body.removeChild(stopButton);
+    document.body.removeChild(pauseButton);
+    stopButtonActive = false;
     playMusic.innerHTML = '';
+    countdownElement.classList.remove("break-timer");
 
-    breakInterval = setInterval(() => {
-        let minutes = Math.floor(breakCountdown / 60);
-        let seconds = breakCountdown % 60;
-    
-        secs = `${seconds}`.padStart(2, '0');
-    
-        countdownElement.innerHTML = `${minutes}:${secs}<br> Break`;
-        countdownElement.classList.add("break-timer");
+}
 
-        if (breakCountdown === 0) {
-            clearInterval(breakInterval);
-            workCountdown = workTime * 60;
-            updateWorkTimer();
-        }
-    
-        breakCountdown--;
+// Pause timer and resume when clicked again
+function pause() {
+    pauseButtonActive = !pauseButtonActive;
+    currentTime = countdown;
 
-    }, 1000)
+    if (pauseButtonActive) {
+        countdownElement.innerHTML = `${minutes}:${secs}<br>${control}`;
+        pauseButton.textContent = "Resume";
+        clearInterval(interval);
+        playMusic.innerHTML = '';
+    } else {
+        pauseButton.textContent = "Pause";
+        updateTimer(currentTime);
+    }
 }
 
 // Stop button
@@ -184,6 +112,53 @@ function addPauseButton() {
     pauseButton.className = "form-item button stop";
     document.body.appendChild(pauseButton);
 }
+
+
+// Go button to start timer and play music
+button.addEventListener('click', () => {
+    clearInterval(interval);
+    currentTime = null;
+
+    let workTime = parseInt(document.getElementById('work-time').value);
+    let breakTime = document.getElementById('break-time').value;
+
+    //  Check for inputs that are positive numbers
+     if (!workTime || !breakTime || workTime < 0 || breakTime < 0) {
+        alert("please enter a number greater than 0 for Work and Break time");
+        countdownElement.innerHTML = ``;
+        if (stopButton) document.body.removeChild(stopButton);
+        if (pauseButton) document.body.removeChild(pauseButton);
+        playMusic.innerHTML = '';
+        stopButtonActive = false;
+        return;
+    }
+
+    if (choosePlaylist.value === "lofi") {
+        videoUrl = "https://www.youtube.com/embed/5qap5aO4i9A?controls=0&autoplay=1";
+    } else if (choosePlaylist.value === "indie"){
+        videoUrl = "https://www.youtube.com/embed/1itSqkbXIlU?controls=0&autoplay=1";
+    } else {
+        videoUrl = "https://www.youtube.com/embed/fEvM-OUbaKs?controls=0&autoplay=1";
+    }
+
+    workCountdown = workTime * 60;
+    breakCountdown = breakTime * 60;
+
+    countdownElement.innerHTML = `${workTime}:00`;
+
+    updateTimer();   
+
+    // Only add stop button if there isn't one currently
+    if (!stopButtonActive) {
+        addStopButton();
+        addPauseButton();
+        stopButtonActive = true;
+    }
+
+    stopButton.addEventListener('click', reset);
+    pauseButton.addEventListener('click', pause);
+
+});
 
 //button popup for overall counter time counting up
 

@@ -9,7 +9,7 @@ body {
     text-align: center;
     margin-top: 2.5em;
     background: hsl(31, 57%, 95%);
-    line-height: 1.75em;
+    line-height: 1.5em;
     color:hsl(60, 2%, 11%);
 }
 
@@ -37,6 +37,10 @@ body {
     background-color: hsl(60, 2%, 11%);
 }
 
+.mode-text {
+    line-height: 1em;
+}
+
 
 header {
     display: flex;
@@ -46,7 +50,7 @@ header {
 
 header a {
     color:hsl(60, 2%, 11%);
-    padding: 0 4em;
+    padding: 0 20%;
 }
 
 .toggle {
@@ -78,7 +82,7 @@ header a {
 }
 
 .intro {
-    max-width: 60%;
+    max-width: 90%;
     margin: 0 auto;
 }
 
@@ -86,6 +90,7 @@ h1 {
     font-size: 3em;
     padding: 0.5em;
     font-weight: 700;
+    line-height: 1em;
 }
 
 .form {
@@ -138,4 +143,10 @@ button:hover {
     color: hsl(31, 57%, 95%);
     width: 300px;
     margin: 0 auto;
+}
+
+@media only screen and (min-width: 1440px) {
+    .intro {
+        max-width: 60%;
+    }
 }
