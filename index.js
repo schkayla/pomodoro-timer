@@ -134,9 +134,9 @@ button.addEventListener('click', () => {
     }
 
     if (choosePlaylist.value === "lofi") {
-        videoUrl = "https://www.youtube.com/embed/5qap5aO4i9A?controls=0&autoplay=1";
+        videoUrl = "https://www.youtube.com/embed/jfKfPfyJRdk?controls=0&autoplay=1";
     } else if (choosePlaylist.value === "indie"){
-        videoUrl = "https://www.youtube.com/embed/1itSqkbXIlU?controls=0&autoplay=1";
+        videoUrl = "https://www.youtube.com/embed/6H--nIa3yko?controls=0&autoplay=1";
     } else {
         videoUrl = "https://www.youtube.com/embed/fEvM-OUbaKs?controls=0&autoplay=1";
     }
